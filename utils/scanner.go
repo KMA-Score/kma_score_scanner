@@ -49,9 +49,30 @@ func ProcessStudentName(name string) string {
 	caser := cases.Title(language.Vietnamese)
 
 	// Join parts and convert to Vietnamese's name format (capitalize first letter)
-	return caser.String(strings.Join(parts, " "))
+	name = caser.String(strings.Join(parts, " "))
+	name = strings.ReplaceAll(name, "\u00a0", "")
+
+	return name
 }
 
 func CleanStudentStringScore(value string) string {
+	return strings.ReplaceAll(value, "\u00a0", "")
+}
+
+func CleanSubjectName(value string) string {
+	value = strings.ReplaceAll(value, "\u00a0", "")
+
+	// Remove last part
+	valueParts := strings.Split(value, "-")
+	value = strings.TrimSpace(strings.Join(valueParts[:len(valueParts)-1], " "))
+
+	return value
+}
+
+func CleanStudentCode(value string) string {
+	return strings.ReplaceAll(value, "\u00a0", "")
+}
+
+func CleanStudentClass(value string) string {
 	return strings.ReplaceAll(value, "\u00a0", "")
 }
