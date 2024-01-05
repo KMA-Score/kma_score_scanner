@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/KMA-Score/kma_score_scanner/cmd/scan"
 	"github.com/KMA-Score/kma_score_scanner/cmd/tools"
 	"github.com/spf13/cobra"
 	"os"
@@ -23,14 +24,5 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(tools.ToolsCmd)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.KMA_Score_Scanner.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.AddCommand(scan.ScanCmd)
 }
