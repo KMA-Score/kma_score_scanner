@@ -7,14 +7,17 @@ import (
 )
 
 var Pdf2htmlCmd = &cobra.Command{
-	Use:   "pdf2html",
-	Short: "Convert PDF to HTML",
-	Long:  `Convert PDF to HTML using Aspose Cloud API (Self-hosted or cloud hosted).`,
+	Use:     "pdf2html [flags] [input path]",
+	Aliases: []string{"p2h, pdftohtml, p2html"},
+	Short:   "Convert PDF to HTML",
+	Long:    `Convert PDF to HTML using Aspose Cloud API (Self-hosted or cloud hosted).`,
+	Example: "kma_score_scanner tools pdf2html ./input -o ./output",
+	Args:    cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		inputPath, err := cmd.Flags().GetString("input")
+		inputPath := args[0]
 
-		if err != nil {
-			log.Error().Msgf("Error while getting input path: %s", err.Error())
+		if inputPath == "" {
+			_ = cmd.Help()
 			return
 		}
 
@@ -26,7 +29,7 @@ var Pdf2htmlCmd = &cobra.Command{
 		}
 
 		// If input or output path is not set, show help
-		if !cmd.Flags().Changed("input") || !cmd.Flags().Changed("output") {
+		if !cmd.Flags().Changed("output") {
 			_ = cmd.Help()
 			return
 		}
@@ -36,6 +39,5 @@ var Pdf2htmlCmd = &cobra.Command{
 }
 
 func init() {
-	Pdf2htmlCmd.Flags().StringP("input", "i", "", "Input path for file or directory")
 	Pdf2htmlCmd.Flags().StringP("output", "o", "", "Output path for file or directory")
 }

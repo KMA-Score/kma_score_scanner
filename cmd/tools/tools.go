@@ -16,4 +16,5 @@ var ToolsCmd = &cobra.Command{
 
 func init() {
 	ToolsCmd.AddCommand(Pdf2htmlCmd)
+	ToolsCmd.AddCommand(Tsv2SqlCmd)
 }

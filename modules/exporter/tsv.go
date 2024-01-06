@@ -7,6 +7,9 @@ import (
 	"golang.org/x/exp/maps"
 	"io"
 	"os"
+	"path"
+	"strconv"
+	"time"
 )
 
 type StudentInfo struct {
@@ -113,7 +116,15 @@ func TsvExport(subjectScoreMap map[string]SubjectStudentCore, output string) {
 
 func saveToFile(output string, fileName string, content string) {
 	// Create file
-	err := os.WriteFile(output+fileName, []byte(content), 0644)
+	timestamp := time.Now().Unix()
+	outputPath := path.Join(output, strconv.FormatInt(timestamp, 10))
+
+	err := os.MkdirAll(outputPath, os.ModePerm)
+	if err != nil {
+		log.Warn().Err(err).Msgf("Failed to create directory %s", outputPath)
+	}
+
+	err = os.WriteFile(path.Join(outputPath, fileName), []byte(content), 0644)
 
 	if err != nil {
 		log.Error().Err(err).Msgf("Failed to create file %s", fileName)

@@ -6,16 +6,20 @@ import (
 )
 
 var ScanCmd = &cobra.Command{
-	Use:   "scan",
-	Short: "Scan scores and students' data from HTML and export to TSV",
-	Long:  `Scan scores and students' data from HTML and export to TSV`,
+	Use:     "scan [flags] [input path]",
+	Aliases: []string{"s"},
+	Short:   "Scan scores and students' data from HTML and export to TSV",
+	Long:    `Scan scores and students' data from HTML and export to TSV`,
+	Example: "kma_score_scanner scan ./input -o ./output",
+	Args:    cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		if !cmd.Flags().Changed("input") {
+		input := args[0]
+
+		if input == "" {
 			_ = cmd.Help()
 			return
 		}
 
-		input, _ := cmd.Flags().GetString("input")
 		output, _ := cmd.Flags().GetString("output")
 
 		scanner.HandleScanCommand(input, output)
@@ -23,6 +27,5 @@ var ScanCmd = &cobra.Command{
 }
 
 func init() {
-	ScanCmd.Flags().StringP("input", "i", "", "Input path for HTML file or directory")
 	ScanCmd.Flags().StringP("output", "o", "", "Output directory path for TSV file")
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -48,9 +49,18 @@ func HandlePDFtoHTMLCommand(input string, output string) {
 			return
 		}
 
-		log.Info().Msgf("Found %d files", len(files))
+		// Filter html files
+		var pdfFiles []os.FileInfo
 
 		for _, file := range files {
+			if strings.HasSuffix(file.Name(), ".pdf") {
+				pdfFiles = append(pdfFiles, file)
+			}
+		}
+
+		log.Info().Msgf("Found %d files", len(pdfFiles))
+
+		for _, file := range pdfFiles {
 			ConvertPDFtoHTML(wordsApi, ctx, filepath.Join(input, file.Name()), filepath.Join(output, file.Name()+".html"))
 		}
 	}

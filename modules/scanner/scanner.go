@@ -35,9 +35,18 @@ func HandleScanCommand(input string, output string) {
 			return
 		}
 
-		log.Info().Msgf("Found %d files", len(files))
+		// Filter html files
+		var htmlFiles []os.FileInfo
 
 		for _, file := range files {
+			if strings.HasSuffix(file.Name(), ".html") {
+				htmlFiles = append(htmlFiles, file)
+			}
+		}
+
+		log.Info().Msgf("Found %d files", len(htmlFiles))
+
+		for _, file := range htmlFiles {
 			log.Info().Msgf("Scanning file %s", file.Name())
 
 			// Scan file
