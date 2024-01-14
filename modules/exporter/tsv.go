@@ -71,6 +71,11 @@ func TsvExport(subjectScoreMap map[string]SubjectStudentCore, output string) {
 
 		for _, studentScore := range value.StudentScores {
 
+			// Skip if student code is empty
+			if studentScore.StudentCode == "" {
+				continue
+			}
+
 			// Append to student data if not exist
 			_, studentExistYet := studentsDataMap[studentScore.StudentCode]
 			if !studentExistYet {
@@ -92,33 +97,31 @@ func TsvExport(subjectScoreMap map[string]SubjectStudentCore, output string) {
 	studentsData := maps.Values(studentsDataMap)
 	subjectsData := maps.Values(subjectsDataMap)
 
+	outputPath := generateOutputPath(output)
+
 	studentsTsvContent, err := gocsv.MarshalString(&studentsData)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to marshal TSV students data")
 	}
-	saveToFile(output, "students.tsv", studentsTsvContent)
+	saveToFile(outputPath, "students.tsv", studentsTsvContent)
 	log.Info().Msg("Exported students data to TSV")
 
 	subjectsTsvContent, err := gocsv.MarshalString(&subjectsData)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to marshal TSV subjects data")
 	}
-	saveToFile(output, "subjects.tsv", subjectsTsvContent)
+	saveToFile(outputPath, "subjects.tsv", subjectsTsvContent)
 	log.Info().Msg("Exported students data to TSV")
 
 	studentScoresTsvContent, err := gocsv.MarshalString(&studentScores)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to marshal TSV student scores data")
 	}
-	saveToFile(output, "scores.tsv", studentScoresTsvContent)
+	saveToFile(outputPath, "scores.tsv", studentScoresTsvContent)
 	log.Info().Msg("Exported students data to TSV")
 }
 
-func saveToFile(output string, fileName string, content string) {
-	// Create file
-	timestamp := time.Now().Unix()
-	outputPath := path.Join(output, strconv.FormatInt(timestamp, 10))
-
+func saveToFile(outputPath string, fileName string, content string) {
 	err := os.MkdirAll(outputPath, os.ModePerm)
 	if err != nil {
 		log.Warn().Err(err).Msgf("Failed to create directory %s", outputPath)
@@ -129,4 +132,12 @@ func saveToFile(output string, fileName string, content string) {
 	if err != nil {
 		log.Error().Err(err).Msgf("Failed to create file %s", fileName)
 	}
+}
+
+func generateOutputPath(output string) string {
+	// Create file
+	timestamp := time.Now().Unix()
+	outputPath := path.Join(output, strconv.FormatInt(timestamp, 10))
+
+	return outputPath
 }
