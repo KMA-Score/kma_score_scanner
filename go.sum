@@ -2,8 +2,8 @@ github.com/PuerkitoBio/goquery v1.8.1 h1:uQxhNlArOIdbrH1tr0UXwdVFgDcZDrZVdcpygAc
 github.com/PuerkitoBio/goquery v1.8.1/go.mod h1:Q8ICL1kNUJ2sXGoAhPGUdYDJvgQgHzJsnnd3H7Ho5jQ=
 github.com/andybalholm/cascadia v1.3.1 h1:nhxRkql1kdYCc8Snf7D5/D3spOX+dBgjA6u8x004T2c=
 github.com/andybalholm/cascadia v1.3.1/go.mod h1:R4bJ1UQfqADjvDa4P6HZHLh/3OxWWEqc0Sk8XGwHqvA=
-github.com/aspose-words-cloud/aspose-words-cloud-go/dev v0.0.0-20231215204020-a11069ac338e h1:8VwhIyN/1EIDvRGQr4KOcxbMcRAwWOK66wgNSht140Y=
-github.com/aspose-words-cloud/aspose-words-cloud-go/dev v0.0.0-20231215204020-a11069ac338e/go.mod h1:tFvFRrf8ZMJ1FWPj3BVhk2TqZopaJlnVixiwRQn9U6o=
+github.com/aspose-words-cloud/aspose-words-cloud-go/v2401 v2401.0.0-20240112092416-7a0864f4b7d6 h1:ur8U+BmTTMI4Zv2560BBe47oK1LDNJT/iAEzldGzkU0=
+github.com/aspose-words-cloud/aspose-words-cloud-go/v2401 v2401.0.0-20240112092416-7a0864f4b7d6/go.mod h1:13xNVsK555KD9mdrWLg2pq040OiJCZyZcf4crxOCcIM=
 github.com/briandowns/spinner v1.23.0 h1:alDF2guRWqa/FOZZYWjlMIx2L6H0wyewPxo/CH4Pt2A=
 github.com/briandowns/spinner v1.23.0/go.mod h1:rPG4gmXeN3wQV/TsAY4w8lPdIM6RX3yqeBQJSrbXjuE=
 github.com/coreos/go-systemd/v22 v22.5.0/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=

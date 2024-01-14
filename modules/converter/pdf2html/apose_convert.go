@@ -2,8 +2,8 @@ package pdf2html
 
 import (
 	"context"
-	"github.com/aspose-words-cloud/aspose-words-cloud-go/dev/api"
-	"github.com/aspose-words-cloud/aspose-words-cloud-go/dev/api/models"
+	"github.com/aspose-words-cloud/aspose-words-cloud-go/v2401/api"
+	"github.com/aspose-words-cloud/aspose-words-cloud-go/v2401/api/models"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"io"

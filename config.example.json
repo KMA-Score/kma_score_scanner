@@ -1,6 +1,6 @@
 {
   "aspose": {
-    "baseUrl": "http://api.aspose.com",
+    "baseUrl": "https://api.aspose.cloud/v4.0",
     "clientId": "",
     "clientSecret": ""
   }
