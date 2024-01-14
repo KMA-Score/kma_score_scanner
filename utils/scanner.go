@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/KMA-Score/kma_score_scanner/constants"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"strconv"
@@ -75,4 +76,14 @@ func CleanStudentCode(value string) string {
 
 func CleanStudentClass(value string) string {
 	return strings.ReplaceAll(value, "\u00a0", "")
+}
+
+func CheckStudentInBlacklist(studentCode string) bool {
+	for _, code := range constants.BlacklistStudentCode {
+		if code == studentCode {
+			return true
+		}
+	}
+
+	return false
 }

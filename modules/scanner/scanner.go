@@ -207,6 +207,11 @@ func scanFile(input string) map[string]exporter.SubjectStudentCore {
 					StudentScore.StudentScoreStr = utils.CleanStudentStringScore(col9)
 				}
 
+				// Check in blacklist
+				if utils.CheckStudentInBlacklist(StudentScore.StudentCode) {
+					continue
+				}
+
 				tableStudentScores = append(tableStudentScores, StudentScore)
 			}
 
