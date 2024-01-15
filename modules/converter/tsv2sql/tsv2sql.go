@@ -72,8 +72,8 @@ func convertStudents(inputPath string, outputPath string) {
 	sqlCommands := make([]string, 0)
 
 	for _, student := range tsvContent {
-		sqlCommand := fmt.Sprintf("INSERT INTO students (id,name, class) VALUES (\"%s\", \"%s\", \"%s\") "+
-			"ON DUPLICATE KEY UPDATE name=\"%s\",class=\"%s\";",
+		sqlCommand := fmt.Sprintf("INSERT INTO students (id, name, class) VALUES ('%s', '%s', '%s') "+
+			"ON CONFLICT (id) DO UPDATE SET name='%s', class='%s';",
 			student.StudentCode, student.StudentName, student.StudentClass, student.StudentName, student.StudentClass)
 		sqlCommands = append(sqlCommands, sqlCommand)
 	}
@@ -104,8 +104,8 @@ func convertSubjects(inputPath string, outputPath string) {
 	sqlCommands := make([]string, 0)
 
 	for _, items := range tsvContent {
-		sqlCommand := fmt.Sprintf("INSERT INTO subjects (id,name,numberOfCredits) VALUES (\"%s\", \"%s\", %s) "+
-			"ON DUPLICATE KEY UPDATE name=\"%s\",numberOfCredits=%s;",
+		sqlCommand := fmt.Sprintf("INSERT INTO subjects (id,name, \"numberOfCredits\") VALUES ('%s', '%s', '%s') "+
+			"ON CONFLICT (id) DO UPDATE SET name='%s', \"numberOfCredits\"=%s;",
 			items.SubjectCode, items.SubjectName, items.SubjectCredit, items.SubjectName, items.SubjectCredit)
 		sqlCommands = append(sqlCommands, sqlCommand)
 	}
@@ -137,10 +137,10 @@ func convertScores(inputPath string, outputPath string) {
 
 	for _, items := range tsvContent {
 		sqlCommand := fmt.Sprintf("INSERT INTO scores "+
-			"(studentId,subjectId,firstComponentScore,secondComponentScore,examScore,averageScore,alphabetScore) "+
-			"VALUES (\"%s\", \"%s\", %.1f, %.1f, %.1f ,%.1f, \"%s\") "+
-			"ON DUPLICATE KEY UPDATE "+
-			"firstComponentScore=%.f,secondComponentScore=%.f,examScore=%.1f,averageScore=%.1f,alphabetScore=\"%s\";",
+			"(\"studentId\",\"subjectId\",\"firstComponentScore\",\"secondComponentScore\",\"examScore\",\"averageScore\",\"alphabetScore\") "+
+			"VALUES ('%s', '%s', %.1f, %.1f, %.1f ,%.1f, '%s') "+
+			"ON CONFLICT (\"studentId\", \"subjectId\") DO UPDATE SET "+
+			"\"firstComponentScore\"=%.f,\"secondComponentScore\"=%.f,\"examScore\"=%.1f,\"averageScore\"=%.1f,\"alphabetScore\"='%s';",
 			items.StudentCode, items.SubjectCode, items.StudentScoreTP1, items.StudentScoreTP2, items.StudentScoreExam,
 			items.StudentScoreFinal, items.StudentScoreStr, items.StudentScoreTP1, items.StudentScoreTP2,
 			items.StudentScoreExam, items.StudentScoreFinal, items.StudentScoreStr)
