@@ -59,7 +59,7 @@ func TsvExport(subjectScoreMap map[string]SubjectStudentCore, output string) {
 	for _, value := range subjectScoreMap {
 		_, subjectExistYet := subjectsDataMap[value.SubjectCode]
 
-		if !subjectExistYet {
+		if !subjectExistYet && value.SubjectCode != "" {
 			subjectInfo := SubjectInfo{
 				SubjectName:   value.SubjectName,
 				SubjectCode:   value.SubjectCode,

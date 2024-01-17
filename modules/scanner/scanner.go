@@ -101,7 +101,7 @@ func scanFile(input string) map[string]exporter.SubjectStudentCore {
 	}
 
 	// Find the review items. Which is <p> tag with text "Số TC:" and <table> tag
-	allSelection := doc.Find("p:contains(\"Số TC:\"), table")
+	allSelection := doc.Find("p:contains(\"CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\"), p:contains(\"Số TC:\"), table")
 
 	// Global map to store all scores and subject info
 	var ssScores = make(map[string]exporter.SubjectStudentCore)
@@ -113,12 +113,24 @@ func scanFile(input string) map[string]exporter.SubjectStudentCore {
 		s := allSelection.Eq(i)
 
 		// Check if the current selection is <p> tag
-		if s.Is("p") {
+		// Before each table segments, there are <p> tag with subject data and "header" tag
+		// And the subject data <p> tag usually next to the "header" tag
+		if s.Is("p") && strings.Contains(strings.ToUpper(s.Text()), "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM") {
+			// Always subject data is in the next <p> tag
+			s1 := allSelection.Eq(i + 1)
+
+			// In some cases, the subject data is not next to "header" tag, or just don't have.
+			//Continue and use the previous subject code
+			if !strings.Contains(s1.Text(), "Số TC:") {
+				continue
+			}
+
 			// Split the string by "Số TC:"
-			parts := strings.Split(s.Text(), "Số TC:")
+			parts := strings.Split(s1.Text(), "Số TC:")
 
 			// The first part contains the course name, split it by ":"
 			courseParts := strings.Split(parts[0], ":")
+
 			subjectName := utils.CleanSubjectName(strings.TrimSpace(courseParts[1]))
 
 			// The second part contains the course credit and code, split it by "Mã học phần:"

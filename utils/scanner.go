@@ -65,6 +65,11 @@ func CleanSubjectName(value string) string {
 
 	// Remove last part
 	valueParts := strings.Split(value, "-")
+
+	if len(valueParts) == 1 {
+		return value
+	}
+
 	value = strings.TrimSpace(strings.Join(valueParts[:len(valueParts)-1], " "))
 
 	return value
